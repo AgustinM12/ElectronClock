@@ -19,6 +19,7 @@ const createWindow = () => {
     autoHideMenuBar: true,
     transparent: true,
     alwaysOnTop: true,
+    skipTaskbar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },

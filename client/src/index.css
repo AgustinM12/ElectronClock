@@ -3,5 +3,6 @@
 @tailwind utilities;
 
 body {
+    -webkit-app-region: drag;
     background-color: transparent;
 }
