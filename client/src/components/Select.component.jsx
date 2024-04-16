@@ -1,20 +1,18 @@
 import { useState } from "react"
 
-export const SelectComponent = ({ list, defaultOption, defaultValue, onSelect }) => {
+export const SelectComponent = ({ list, defaultOption, defaultValue, name }) => {
 
-    const [selectedColor, setSelectedColor] = useState(localStorage.getItem("selectedColor") || "");
-    const [selectedSize, setSelectedSize] = useState(localStorage.getItem("selectedSize") || "");
+    const [selectedItem, setSelectedItem] = useState(localStorage.getItem("selectedItem") || "");
 
     const handleChange = (event) => {
         const newValue = event.target.value;
-        setSelectedColor(newValue);
-        onSelect(newValue);
-        localStorage.setItem("selectedItem", newValue);
+        setSelectedItem(newValue);
+        localStorage.setItem(name, newValue);
     }
 
     return (
-        <select name="colorsHour" onChange={handleChange} className="w-min p-1 rounded mt-1 bg-blue-500 hover:bg-blue-700 text-white">
-            <option key={"default"} defaultValue={selectedItem}>{defaultOption}</option>
+        <select name={name} onChange={handleChange} className="w-52 p-1 rounded mt-1 bg-blue-500 hover:bg-blue-700 text-white">
+            <option key={"default"} defaultValue={defaultValue}>{defaultOption}</option>
             {
                 list.map((items, index) => {
                     return (
