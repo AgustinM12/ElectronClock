@@ -11,15 +11,14 @@ const createWindow = () => {
   const mainWindow = new BrowserWindow({
     width: 200,
     height: 100,
-    maxHeight: 100,
+    maxHeight: 208,
     minHeight: 100,
-    maxWidth: 200,
+    maxWidth: 240,
     minWidth: 200,
     frame: false,
     autoHideMenuBar: true,
     transparent: true,
     alwaysOnTop: true,
-    skipTaskbar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -29,7 +28,14 @@ const createWindow = () => {
   ipcMain.on('close-app', () => app.quit());
 
   // and load the index.html of the app.
+  // ! load prebuild
+  // * 
   mainWindow.loadFile(path.join(__dirname, 'index.html'));
+
+  // ! load with react-vite
+  //  mainWindow.loadURL('http://localhost:5173');
+
+
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();

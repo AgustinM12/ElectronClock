@@ -11,6 +11,8 @@ export const Clock = () => {
     //* TOGGLES
     const { is24hs, changeFormat, selectedColor, selectedSize } = useContext(ClockStyleContext);
 
+    console.log(selectedColor, selectedSize);
+
     const [showOptions, toggleOptions] = useToggle(false);
 
     //* TIME
@@ -25,11 +27,10 @@ export const Clock = () => {
 
     return (
         <>
-            <article className={`font-bold text-center ${showOptions ? " bg-slate-700 w-80 p-10 pt-2 rounded-md border-2 border-white shadow-lg" : "p-0"} `}>
+            <article className={`font-bold text-center overflow- flex flex-col justify-center items-center ${showOptions ? "bg-slate-700 w-60 h-52 p-5 pt-2 rounded-md border-2 border-white shadow-lg" : ""} `}>
 
-                <div className="flex items-center justify-center space-x-2">
-                    <h1
-                        style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
+                <section className="flex items-center justify-center space-x-2">
+                    <h1 style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
                         className={`${selectedColor} ${selectedSize}`}>{`${hours}:${minutes}:${seconds} ${period}`}</h1>
 
                     {/*  Settings */}
@@ -41,24 +42,26 @@ export const Clock = () => {
                     </button>
 
                     {/*Close */}
-                    <button id="close" className={showOptions ? "visible hover:text-red-500" : "invisible"}>
+                    <button onClick={toggleOptions} className={showOptions ? "visible text-white hover:text-red-500" : "invisible"}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                         </svg>
 
                     </button>
 
-                </div>
+                </section>
 
-                <section className={showOptions ? "visible flex flex-col justify-center items-center" : "invisible"}>
+                <section className={showOptions ? "visible space-y-2 flex flex-col" : "hidden"}>
 
                     <button onClick={changeFormat}
-                        className="bg-blue-500 hover:bg-blue-700 text-white p-1 rounded mt-1 w-52"
+                        className="bg-blue-500 hover:bg-blue-700 text-white p-1 rounded mt-1 w-52 transition-colors"
                     >Cambiar formato horario</button>
 
-                    <SelectComponent list={colors} defaultOption={"Color de la hora"} defaultValue={selectedColor} name={"hourColor"} />
+                    <SelectComponent list={colors} text={"Color de la hora"} defaultValue={selectedColor} name={"hourColor"} />
 
-                    <SelectComponent list={size} defaultOption={"Tamaño de la hora"} defaultValue={selectedColor} name={"hourSize"} />
+                    <SelectComponent list={size} text={"Tamaño de la hora"} defaultValue={selectedColor} name={"hourSize"} />
+
+                    <button id="close" className="p-1 w-52 rounded bg-red-600 hover:bg-red-800 text-white transition-colors">Cerrar app</button>
 
                 </section>
             </article>
