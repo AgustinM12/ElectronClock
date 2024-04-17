@@ -5,11 +5,17 @@ export const ClockStyleContext = createContext()
 
 export const ClockStyleProvider = ({ children }) => {
 
+    const formatStorage = localStorage.getItem("hourFormat");
+
+    if (JSON.parse(formatStorage) !== true || false) {
+        localStorage.setItem("hourFormat", false);
+    }
+
     const [selectedColor, setSelectedColor] = useState(localStorage.getItem("hourColor") || "text-white");
 
     const [selectedSize, setSelectedSize] = useState(localStorage.getItem("hourSize") || "text-md");
 
-    const [is24hs, toggleFormat] = useToggle(localStorage.getItem("hourFormat") || false);
+    const [is24hs, toggleFormat] = useToggle(JSON.parse(formatStorage) || false);
 
     const handleChangeColor = (value) => {
         setSelectedColor(value);
@@ -19,9 +25,14 @@ export const ClockStyleProvider = ({ children }) => {
         setSelectedSize(value);
     }
 
+    const changeFormat = () => {
+        toggleFormat();
+        localStorage.setItem("hourFormat", !is24hs);
+    }
+
     return (
         <>
-            <ClockStyleContext.Provider value={{ is24hs, toggleFormat, selectedColor, handleChangeColor, selectedSize, handleChangeSize }}>
+            <ClockStyleContext.Provider value={{ is24hs, changeFormat, selectedColor, handleChangeColor, selectedSize, handleChangeSize }}>
                 {children}
             </ClockStyleContext.Provider>
         </>

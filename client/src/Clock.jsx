@@ -3,29 +3,15 @@ import { colors } from "./data/tailwindColors.data"
 import { size } from "./data/tailwindSize.data"
 import { useClock } from "./hooks/useClock"
 import { useToggle } from "./hooks/usetoggle";
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { ClockStyleContext } from "./context/ClockStyle.context";
 
 export const Clock = () => {
 
     //* TOGGLES
-    const { is24hs, toggleFormat } = useContext(ClockStyleContext);
+    const { is24hs, changeFormat, selectedColor, selectedSize } = useContext(ClockStyleContext);
 
     const [showOptions, toggleOptions] = useToggle(false);
-
-
-    // * SELECTS
-    const [selectedColor, setSelectedColor] = useState(localStorage.getItem("selectedColor") || "text-white");
-
-    const [selectedSize, setSelectedSize] = useState(localStorage.getItem("selectedSize") || "text-md");
-
-    const handleChangeColor = (value) => {
-        setSelectedColor(value);
-    };
-
-    const handleChangeSize = (value) => {
-        setSelectedSize(value);
-    }
 
     //* TIME
     const time = useClock();
@@ -66,13 +52,13 @@ export const Clock = () => {
 
                 <section className={showOptions ? "visible flex flex-col justify-center items-center" : "invisible"}>
 
-                    <button onClick={toggleFormat}
+                    <button onClick={changeFormat}
                         className="bg-blue-500 hover:bg-blue-700 text-white p-1 rounded mt-1 w-52"
                     >Cambiar formato horario</button>
 
-                    <SelectComponent list={colors} defaultOption={"Color de la hora"} defaultValue={"white"} onSelect={handleChangeColor} name={"hourColor"} />
+                    <SelectComponent list={colors} defaultOption={"Color de la hora"} defaultValue={selectedColor} name={"hourColor"} />
 
-                    <SelectComponent list={size} defaultOption={"Tamaño de la hora"} defaultValue={"text-md"} onSelect={handleChangeSize} name={"hourSize"} />
+                    <SelectComponent list={size} defaultOption={"Tamaño de la hora"} defaultValue={selectedColor} name={"hourSize"} />
 
                 </section>
             </article>
