@@ -30,9 +30,11 @@ export const Clock = () => {
 
     const period = is24hs ? "" : time.getHours() >= 12 ? "PM" : "AM";
 
+    { /* // ! tamaños buenos w-60 h-52 */ }
+
     return (
         <>
-            <article className={`font-bold text-center overflow- flex flex-col justify-center items-center ${showOptions ? "bg-slate-700 w-60 h-52 p-5 pt-2 rounded-md border-2 border-white shadow-lg" : ""} `}>
+            <article className={`font-bold text-center flex flex-col items-center ${showOptions ? "bg-slate-700 w-fit h-fit p-5 pt-2 rounded-md border-2 border-white shadow-lg" : ""} `}>
 
                 <section className="flex items-center justify-center space-x-2">
                     <h1 style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
