@@ -8,6 +8,11 @@ import { ClockStyleContext } from "./context/ClockStyle.context";
 
 export const Clock = () => {
 
+    // En tu componente de React donde manejas el botón de cerrar
+    const handleCloseApp = () => {
+        window.api.close()
+    };
+
     //* TOGGLES
     const { is24hs, changeFormat, selectedColor, selectedSize } = useContext(ClockStyleContext);
 
@@ -61,7 +66,7 @@ export const Clock = () => {
 
                     <SelectComponent list={size} text={"Tamaño de la hora"} defaultValue={selectedColor} name={"hourSize"} />
 
-                    <button id="close" className="p-1 w-52 rounded bg-red-600 hover:bg-red-800 text-white transition-colors">Cerrar app</button>
+                    <button id="close" onClick={handleCloseApp} className="p-1 w-52 rounded bg-red-600 hover:bg-red-800 text-white transition-colors">Cerrar app</button>
 
                 </section>
             </article>

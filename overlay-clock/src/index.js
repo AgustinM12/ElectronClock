@@ -35,8 +35,6 @@ const createWindow = () => {
   // ! load with react-vite
   //  mainWindow.loadURL('http://localhost:5173');
 
-
-
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 };
