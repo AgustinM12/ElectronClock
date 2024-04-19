@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from 'react';
 
 export const useComponentSize = () => {
   const ref = useRef(null);
-  const [widowSize, setWindowSize] = useState({ width: 0, height: 0 });
+  const [windowSize, setWindowSize] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
     const handleResize = () => {
@@ -14,11 +14,15 @@ export const useComponentSize = () => {
 
     handleResize();
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, [ref]);
+    const resizeObserver = new ResizeObserver(handleResize);
+    if (ref.current) {
+      resizeObserver.observe(ref.current);
+    }
 
-  return { ref, widowSize };
-}
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
 
-
+  return { ref, windowSize };
+};

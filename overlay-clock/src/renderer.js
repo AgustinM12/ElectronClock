@@ -6,6 +6,6 @@ CLOSE_BTN.addEventListener("click", () => {
 });
 
 OPTION_BTN.addEventListener("click", () => {
-    api.toggleOptions();
+    api.resize(width, height);
 });
 

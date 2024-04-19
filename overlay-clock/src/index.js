@@ -9,12 +9,14 @@ if (require('electron-squirrel-startup')) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 200,
-    height: 100,
-    maxHeight: 208,
-    minHeight: 100,
-    maxWidth: 240,
-    minWidth: 200,
+    width: 145,
+    height: 24,
+
+    maxWidth: 145,
+    maxHeight: 24,
+
+    minWidth: 145,
+    minHeight: 24,
     frame: false,
     autoHideMenuBar: true,
     transparent: true,
@@ -28,19 +30,21 @@ const createWindow = () => {
   ipcMain.on('close-app', () => app.quit());
 
   //FUNCION PARA REDIMENSIONAR LA VENTANA
-  ipcMain.on('resize-window', () => {
-    // Redimensiona la ventana según el nuevo tamaño
-    const { width, height } = mainWindow.getContentBounds();
-    mainWindow.setContentSize(width, height);
+  ipcMain.on('resize-window', (event, width, height) => {
+    if (mainWindow) {
+      mainWindow.setSize(width, height);
+      mainWindow.setMaximumSize(width, height);
+      mainWindow.setMinimumSize(width, height);
+    }
   });
 
   // and load the index.html of the app.
   // ! load prebuild
   // * 
-  mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  // mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // ! load with react-vite
-  //  mainWindow.loadURL('http://localhost:5173');
+  mainWindow.loadURL('http://localhost:8080');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
@@ -60,6 +64,13 @@ app.whenReady().then(() => {
     }
   });
 });
+
+app.on('ready', () => {
+  ipcMain.on('initialize-window', (event, width, height) => {
+    createWindow(width, height);
+  });
+});
+
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
