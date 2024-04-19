@@ -5,18 +5,27 @@ import { useClock } from "./hooks/useClock"
 import { useToggle } from "./hooks/usetoggle";
 import { useContext } from "react";
 import { ClockStyleContext } from "./context/ClockStyle.context";
+import { useComponentSize } from "./hooks/useComponentSize";
 
 export const Clock = () => {
+
+    const { ref, widowSize } = useComponentSize();
+
+    console.log(widowSize);
+
+    const handleResize = () => {
+        widowSize.api.toggleOptions()
+    }
 
     // En tu componente de React donde manejas el botón de cerrar
     const handleCloseApp = () => {
         window.api.close()
     };
 
+
+
     //* TOGGLES
     const { is24hs, changeFormat, selectedColor, selectedSize } = useContext(ClockStyleContext);
-
-    console.log(selectedColor, selectedSize);
 
     const [showOptions, toggleOptions] = useToggle(false);
 
@@ -30,18 +39,16 @@ export const Clock = () => {
 
     const period = is24hs ? "" : time.getHours() >= 12 ? "PM" : "AM";
 
-    { /* // ! tamaños buenos w-60 h-52 */ }
-
     return (
         <>
-            <article className={`font-bold text-center flex flex-col items-center ${showOptions ? "bg-slate-700 w-fit h-fit p-5 pt-2 rounded-md border-2 border-white shadow-lg" : ""} `}>
+            <article ref={ref} className={`font-bold text-center flex flex-col w-fit h-fit items-center ${showOptions ? "bg-slate-700 p-5 pt-2 rounded-md border-2 border-white shadow-lg" : ""} `}>
 
                 <section className="flex items-center justify-center space-x-2">
                     <h1 style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
                         className={`${selectedColor} ${selectedSize}`}>{`${hours}:${minutes}:${seconds} ${period}`}</h1>
 
                     {/*  Settings */}
-                    <button onClick={toggleOptions} className={`rounded-full border ${showOptions ? "text-red-500 border-red-500" : "text-green-500 border-green-500"}`}>
+                    <button id="options" onClick={toggleOptions} className={`rounded-full border ${showOptions ? "text-red-500 border-red-500" : "text-green-500 border-green-500"}`}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 1 1-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 6.336-4.486l-3.276 3.276a3.004 3.004 0 0 0 2.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852Z" />
                             <path strokeLinecap="round" strokeLinejoin="round" d="M4.867 19.125h.008v.008h-.008v-.008Z" />

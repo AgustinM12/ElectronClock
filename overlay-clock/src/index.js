@@ -27,6 +27,13 @@ const createWindow = () => {
   //FUNCION PARA CERRAR LA APP
   ipcMain.on('close-app', () => app.quit());
 
+  //FUNCION PARA REDIMENSIONAR LA VENTANA
+  ipcMain.on('resize-window', () => {
+    // Redimensiona la ventana según el nuevo tamaño
+    const { width, height } = mainWindow.getContentBounds();
+    mainWindow.setContentSize(width, height);
+  });
+
   // and load the index.html of the app.
   // ! load prebuild
   // * 
