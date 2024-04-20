@@ -5,6 +5,5 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld("api", {
     close: () => ipcRenderer.send('close-app'),
-    resize: (width, height) => ipcRenderer.send('resize-window', width, height),
-    start: (width, height) => ipcRenderer.send("initialize-window" || 'start-size', width, height),
+    resizeWindow: (width, height) => ipcRenderer.send('resize-window', width, height),
 });

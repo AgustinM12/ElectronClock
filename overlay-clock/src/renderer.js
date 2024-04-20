@@ -6,6 +6,6 @@ CLOSE_BTN.addEventListener("click", () => {
 });
 
 OPTION_BTN.addEventListener("click", () => {
-    api.resize(width, height);
+    api.resizeWindow(width, height); // Cambiado de 'resize' a 'resizeWindow'
 });
 

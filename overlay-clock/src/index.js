@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
+const { log } = require('node:console');
 const path = require('node:path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -10,17 +11,11 @@ const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     width: 145,
-    height: 24,
-
-    maxWidth: 145,
-    maxHeight: 24,
-
-    minWidth: 145,
-    minHeight: 24,
+    height: 32,
     frame: false,
     autoHideMenuBar: true,
-    transparent: true,
     alwaysOnTop: true,
+    resizable: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
     },
@@ -30,21 +25,24 @@ const createWindow = () => {
   ipcMain.on('close-app', () => app.quit());
 
   //FUNCION PARA REDIMENSIONAR LA VENTANA
+  let resizeTimeout;
   ipcMain.on('resize-window', (event, width, height) => {
-    if (mainWindow) {
-      mainWindow.setSize(width, height);
-      mainWindow.setMaximumSize(width, height);
-      mainWindow.setMinimumSize(width, height);
-    }
+    clearTimeout(resizeTimeout);
+    console.log('Received resize-window event with width:', width, 'and height:', height+8);
+    resizeTimeout = setTimeout(() => {
+      mainWindow.setSize(width, height+8);
+    }, 100);
+    mainWindow.setMaximumSize(width, height+8);
+    mainWindow.setMinimumSize(width, height+8);
   });
 
   // and load the index.html of the app.
   // ! load prebuild
   // * 
-  // mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
   // ! load with react-vite
-  mainWindow.loadURL('http://localhost:8080');
+  //mainWindow.loadURL('http://localhost:8080');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
