@@ -16,13 +16,13 @@ export const SelectComponent = ({ list, text, defaultValue, name }) => {
     }
 
     return (
-        <select name={name} onChange={handleChange} className="w-52 p-1 rounded mt-1 bg-purple-700 hover:bg-blue-700 text-white  transition-colors">
-            <option key={name} defaultValue={defaultValue}>{text}</option>
+        <select name={name} onChange={handleChange} className="w-52 p-1 rounded mt-1 bg-purple-700 hover:bg-blue-700 text-white  transition-colors shadow-xl">
+            <option key={0} defaultValue={defaultValue}>{text}</option>
             {
                 list.map((items, index) => {
                     return (
                         <>
-                            <option className={`${items} bg-gray-300`} key={index} value={items}>{items.slice(5)}</option>
+                            <option className={`${items} bg-gray-300`} key={index+1} value={items}>{items.slice(5)}</option>
                         </>
                     )
                 })

@@ -37,7 +37,7 @@ const createWindow = () => {
     alwaysOnTop: true,
     resizable: false,
     transparent: true,
-    icon: path.join(__dirname, 'icon.png'),
+    icon: getIconPath('icon.ico'),
     modal: true,
     skipTaskbar: true,
     x: 0,
@@ -54,20 +54,20 @@ const createWindow = () => {
   let resizeTimeout;
   ipcMain.on('resize-window', (event, width, height) => {
     clearTimeout(resizeTimeout);
-    // console.log('Received resize-window event with width:', width, 'and height:', height + 8);
+    // console.log('Received resize-window event with width:', width, 'and height:', height);
     resizeTimeout = setTimeout(() => {
-      mainWindow.setSize(width, height + 8);
+      mainWindow.setSize(width, height);
     }, 100);
-    mainWindow.setMaximumSize(width, height + 8);
-    mainWindow.setMinimumSize(width, height + 8);
+    mainWindow.setMaximumSize(width, height);
+    mainWindow.setMinimumSize(width, height);
   });
 
   // and load the index.html of the app.
   // ! load build
-  //mainWindow.loadFile(path.join(__dirname, 'index.html'));
+  mainWindow.loadFile(path.join(__dirname, './assets/index.html'));
 
   // ! load with react-vite
-  mainWindow.loadURL('http://localhost:8080');
+  //mainWindow.loadURL('http://localhost:8080');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();

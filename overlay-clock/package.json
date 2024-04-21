@@ -29,8 +29,13 @@
   },
   "license": "MIT",
   "dependencies": {
-    "electron-reload": "^2.0.0-alpha.1",
-    "electron-squirrel-startup": "^1.0.0",
-    "systeminformation": "^5.22.7"
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "build": {
+    "appId": "ElectronClock.js",
+    "productName": "ElectronClock",    
+    "win": {
+      "icon": "build/icon.ico"
+    }
   }
 }

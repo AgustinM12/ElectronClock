@@ -16,7 +16,11 @@ export const Clock = () => {
     }
 
     useEffect(() => {
-        window.api.resizeWindow(windowSize.width, windowSize.height)
+        if (selectedSize == "text-xl" || selectedSize == "text-2xl" || selectedSize == "text-3xl") {
+            window.api.resizeWindow(windowSize.width, windowSize.height+8)
+        } else {
+            window.api.resizeWindow(windowSize.width, windowSize.height)
+        }
     }, [windowSize]);
 
 
@@ -41,15 +45,15 @@ export const Clock = () => {
 
     return (
         <>
-            <article ref={ref} className={`flex flex-col font-bold text-center w-fit h-fit items-center justify-center  ${showOptions ? "bg-slate-800 p-5 pt-2 rounded-md border-2 border-white shadow-lg" : "p-0 m-0"} `}>
+            <article ref={ref} className={`flex flex-col font-bold text-center w-fit h-fit items-center justify-center  ${showOptions ? "bg-slate-800 p-5 rounded-md border-2 border-white shadow-lg " : "pt-1.5 m-0"} `}>
 
                 {/*Hour */}
                 <section className="flex items-center space-x-2">
                     <h1 style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
-                        className={`${selectedColor} ${selectedSize} `}>{`${hours}:${minutes}:${seconds} ${period}`}</h1>
+                        className={`${selectedColor} ${selectedSize}`}>{`${hours}:${minutes}:${seconds} ${period}`}</h1>
 
                     {/* Settings BTN*/}
-                    <button id="options" onClick={handleResizeWindow} className={`rounded-full border transition-colors ${showOptions ? "text-white border-white hover:text-red-600 hover:border-red-500" : "text-gray-700 border-gray-700 hover:text-green-600 hover:border-green-600"}`}>
+                    <button id="options" onClick={handleResizeWindow} className={`p-0 m-0 rounded-full border transition-colors ${showOptions ? "text-white border-white hover:text-red-600 hover:border-red-500" : "text-gray-700 border-gray-700 hover:text-green-600 hover:border-green-600"}`}>
 
                         {!showOptions ?
                             (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
@@ -72,7 +76,7 @@ export const Clock = () => {
                 <section className={showOptions ? "visible space-y-2 flex flex-col" : "hidden"}>
 
                     <button onClick={changeFormat}
-                        className="bg-purple-700 hover:bg-blue-700 text-white p-1 rounded mt-1 w-52 transition-colors"
+                        className="bg-purple-700 hover:bg-blue-700 text-white p-1 rounded mt-1 w-52 transition-colors shadow-xl"
                     >Cambiar formato horario</button>
 
                     <SelectComponent list={colors} text={"Color de la hora"} defaultValue={selectedColor} name={"hourColor"} />
