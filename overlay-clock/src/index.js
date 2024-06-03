@@ -17,7 +17,8 @@ app.on('ready', () => {
   tray = new Tray(getIconPath("icon.ico")); // Ruta al icono de la bandeja del sistema
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Abrir', type: 'normal', icon: resizeIcon(getIconPath("open.ico"), 16, 16), click: () => mainWindow.show() },
-    { label: 'Quit', type: 'normal', icon: resizeIcon(getIconPath("close.ico"), 16, 16), click: () => app.quit() }
+    { label: 'Options', type: 'normal', icon: resizeIcon(getIconPath("close.ico"), 16, 16), click: () => app.quit() },
+    { label: 'Exit', type: 'normal', icon: resizeIcon(getIconPath("settings.ico"), 16, 16), click: () => app.quit() },
   ]);
 
 

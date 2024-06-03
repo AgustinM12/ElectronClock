@@ -15,13 +15,13 @@ export const Clock = () => {
         toggleOptions()
     }
 
-    useEffect(() => {
-        if (selectedSize == "text-xl" || selectedSize == "text-2xl" || selectedSize == "text-3xl") {
-            window.api.resizeWindow(windowSize.width, windowSize.height+8)
-        } else {
-            window.api.resizeWindow(windowSize.width, windowSize.height)
-        }
-    }, [windowSize]);
+    // useEffect(() => {
+    //     if (selectedSize == "text-xl" || selectedSize == "text-2xl" || selectedSize == "text-3xl") {
+    //         window.api.resizeWindow(windowSize.width, windowSize.height+8)
+    //     } else {
+    //         window.api.resizeWindow(windowSize.width, windowSize.height)
+    //     }
+    // }, [windowSize]);
 
 
     const handleCloseApp = () => {
@@ -53,7 +53,7 @@ export const Clock = () => {
                         className={`${selectedColor} ${selectedSize}`}>{`${hours}:${minutes}:${seconds} ${period}`}</h1>
 
                     {/* Settings BTN*/}
-                    <button id="options" onClick={handleResizeWindow} className={`p-0 m-0 rounded-full border transition-colors ${showOptions ? "text-white border-white hover:text-red-600 hover:border-red-500" : "text-gray-700 border-gray-700 hover:text-green-600 hover:border-green-600"}`}>
+                    {/* <button id="options" onClick={handleResizeWindow} className={`p-0 m-0 rounded-full border transition-colors ${showOptions ? "text-white border-white hover:text-red-600 hover:border-red-500" : "text-gray-700 border-gray-700 hover:text-green-600 hover:border-green-600"}`}>
 
                         {!showOptions ?
                             (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
@@ -68,12 +68,12 @@ export const Clock = () => {
 
                         }
 
-                    </button>
+                    </button> */}
 
                 </section>
 
                 {/* Settings Section */}
-                <section className={showOptions ? "visible space-y-2 flex flex-col" : "hidden"}>
+                <section className={showOptions ? "visible space-y-2 flex flex-col app-region-drag" : "hidden"}>
 
                     <button onClick={changeFormat}
                         className="bg-purple-700 hover:bg-blue-700 text-white p-1 rounded mt-1 w-52 transition-colors shadow-xl"
