@@ -16,7 +16,7 @@ export const SelectComponent = ({ list, text, defaultValue, name }) => {
     }
 
     return (
-        <select name={name} onChange={handleChange} className="w-52 p-1 rounded mt-1 bg-purple-700 hover:bg-blue-700 text-white  transition-colors shadow-xl">
+        <select name={name} onChange={handleChange} className="w-52 p-1 rounded mt-1 bg-purple-700 hover:bg-blue-700 text-white  transition-colors shadow-xl cursor-pointer">
             <option key={0} defaultValue={defaultValue}>{text}</option>
             {
                 list.map((items, index) => {

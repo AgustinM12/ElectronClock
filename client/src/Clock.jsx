@@ -12,26 +12,30 @@ export const Clock = () => {
     const { ref, windowSize } = useComponentSize();
 
     const handleResizeWindow = () => {
-        toggleOptions()
+        setToggleOptions()
     }
 
-    // useEffect(() => {
-    //     if (selectedSize == "text-xl" || selectedSize == "text-2xl" || selectedSize == "text-3xl") {
-    //         window.api.resizeWindow(windowSize.width, windowSize.height+8)
-    //     } else {
-    //         window.api.resizeWindow(windowSize.width, windowSize.height)
-    //     }
-    // }, [windowSize]);
+    useEffect(() => {
+        if (selectedSize == "text-xl" || selectedSize == "text-2xl" || selectedSize == "text-3xl") {
+            window.api.resizeWindow(windowSize.width, windowSize.height + 8)
+        } else {
+            window.api.resizeWindow(windowSize.width, windowSize.height)
+        }
+    }, [windowSize]);
 
 
     const handleCloseApp = () => {
         window.api.close()
     };
 
+    useEffect(() => {
+        window.api.showOptions(handleResizeWindow);
+    }, []);
+
     //* TOGGLES
     const { is24hs, changeFormat, selectedColor, selectedSize } = useContext(ClockStyleContext);
 
-    const [showOptions, toggleOptions] = useToggle(false);
+    const [toggleOptions, setToggleOptions] = useToggle(false);
 
     //* TIME
     const time = useClock();
@@ -45,17 +49,17 @@ export const Clock = () => {
 
     return (
         <>
-            <article ref={ref} className={`flex flex-col font-bold text-center w-fit h-fit items-center justify-center  ${showOptions ? "bg-slate-800 p-5 rounded-md border-2 border-white shadow-lg " : "pt-1.5 m-0"} `}>
+            <article ref={ref} className={`flex flex-col font-bold text-center w-fit h-fit items-center justify-center  ${toggleOptions ? "bg-slate-800 p-5 rounded-md border-2 border-white shadow-lg " : "pt-1.5 m-0"} `}>
 
                 {/*Hour */}
                 <section className="flex items-center space-x-2">
                     <h1 style={{ textShadow: '-1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000' }}
-                        className={`${selectedColor} ${selectedSize}`}>{`${hours}:${minutes}:${seconds} ${period}`}</h1>
+                        className={`${toggleOptions && "draggable"} ${selectedColor} ${selectedSize}`}>{`${hours}:${minutes}:${seconds} ${period}`}</h1>
 
                     {/* Settings BTN*/}
-                    {/* <button id="options" onClick={handleResizeWindow} className={`p-0 m-0 rounded-full border transition-colors ${showOptions ? "text-white border-white hover:text-red-600 hover:border-red-500" : "text-gray-700 border-gray-700 hover:text-green-600 hover:border-green-600"}`}>
+                    <button id="options" onClick={handleResizeWindow} className={`p-0 m-0 rounded-full border transition-colors ${toggleOptions ? "text-white border-white hover:text-red-600 hover:border-red-500" : "hidden"}`}>
 
-                        {!showOptions ?
+                        {!toggleOptions ?
                             (<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-4 h-4">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75a4.5 4.5 0 0 1-4.884 4.484c-1.076-.091-2.264.071-2.95.904l-7.152 8.684a2.548 2.548 0 1 1-3.586-3.586l8.684-7.152c.833-.686.995-1.874.904-2.95a4.5 4.5 0 0 1 6.336-4.486l-3.276 3.276a3.004 3.004 0 0 0 2.25 2.25l3.276-3.276c.256.565.398 1.192.398 1.852Z" />
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4.867 19.125h.008v.008h-.008v-.008Z" />
@@ -68,12 +72,12 @@ export const Clock = () => {
 
                         }
 
-                    </button> */}
+                    </button>
 
                 </section>
 
                 {/* Settings Section */}
-                <section className={showOptions ? "visible space-y-2 flex flex-col app-region-drag" : "hidden"}>
+                <div className={toggleOptions ? "visible space-y-2 flex flex-col" : "hidden"}>
 
                     <button onClick={changeFormat}
                         className="bg-purple-700 hover:bg-blue-700 text-white p-1 rounded mt-1 w-52 transition-colors shadow-xl"
@@ -85,7 +89,7 @@ export const Clock = () => {
 
                     <button id="close" onClick={handleCloseApp} className="p-1 w-52 rounded bg-red-700 hover:bg-red-500 text-white transition-colors">Cerrar app</button>
 
-                </section>
+                </div>
             </article>
         </>
     )

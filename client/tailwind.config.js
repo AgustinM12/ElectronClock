@@ -10,11 +10,10 @@ export default {
   plugins: [
     function ({ addUtilities }) {
       const newUtilities = {
-        '.app-region-drag': {
+        '.draggable': {
           '-webkit-app-region': 'drag',
         },
       }
       addUtilities(newUtilities, ['responsive', 'hover'])
     }
-  ],
-}
+  ],}

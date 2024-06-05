@@ -17,8 +17,8 @@ app.on('ready', () => {
   tray = new Tray(getIconPath("icon.ico")); // Ruta al icono de la bandeja del sistema
   const contextMenu = Menu.buildFromTemplate([
     { label: 'Abrir', type: 'normal', icon: resizeIcon(getIconPath("open.ico"), 16, 16), click: () => mainWindow.show() },
-    { label: 'Options', type: 'normal', icon: resizeIcon(getIconPath("close.ico"), 16, 16), click: () => app.quit() },
-    { label: 'Exit', type: 'normal', icon: resizeIcon(getIconPath("settings.ico"), 16, 16), click: () => app.quit() },
+    { label: 'Opciones', type: 'normal', icon: resizeIcon(getIconPath("settings.ico"), 16, 16), click: () => mainWindow.webContents.send('show-options') },
+    { label: 'Cerrar', type: 'normal', icon: resizeIcon(getIconPath("close.ico"), 16, 16), click: () => app.quit() },
   ]);
 
 
@@ -65,10 +65,10 @@ const createWindow = () => {
 
   // and load the index.html of the app.
   // ! load build
-  mainWindow.loadFile(path.join(__dirname, './assets/index.html'));
+  // mainWindow.loadFile(path.join(__dirname, './assets/index.html'));
 
   // ! load with react-vite
-  //mainWindow.loadURL('http://localhost:8080');
+  mainWindow.loadURL('http://localhost:8080');
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();

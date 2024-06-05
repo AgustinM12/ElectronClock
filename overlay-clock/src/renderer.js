@@ -7,6 +7,8 @@ CLOSE_BTN.addEventListener("click", () => {
 
 OPTION_BTN.addEventListener("click", () => {
     api.resizeWindow(width, height); // Cambiado de 'resize' a 'resizeWindow'
-    
 });
 
+OPTION_BTN.addEventListener("click", () => {
+    api.showOptions(isOpen); // Abrir y cerrar menu de opciones
+});
